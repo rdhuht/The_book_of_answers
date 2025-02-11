@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import subprocess
+import sys
 
 # 配置日志记录
 logging.basicConfig(filename='log.log', level=logging.INFO,
@@ -13,8 +14,9 @@ logging.basicConfig(filename='log.log', level=logging.INFO,
 
 logging.info("应用启动")
 
+json_file = os.path.join(sys._MEIPASS, 'The_Book_of_Answers_Full.json')
 # 从JSON文件加载答案
-with open('The_Book_of_Answers_Full.json', 'r', encoding='utf-8') as f:
+with open(json_file, 'r', encoding='utf-8') as f:
     answers = json.load(f)
 logging.info("答案文件加载完成")
 
