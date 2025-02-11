@@ -1,2 +1,2 @@
 打包
-pyinstaller -w -i "app的logo图片ico格式" --name=答案之书 main.py
+(.venv) C:\Users\JianweiCui\Documents\GitHub\The_book_of_answers>pyinstaller -w -i ".\\assets\\The_Book_of_Answers_Logo.ico" --name=答案之书 main.py
