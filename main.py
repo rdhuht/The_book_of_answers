@@ -17,9 +17,8 @@ import time
 json_file = "./src/answers.json"  # JSON 答案文件路径
 thoughts_file = "./src/thoughts.txt"  # 想法文件路径
 ico_logo_file = "./src/logo.ico"  # 图标文件路径
-log_file_path = './log.log'  # 定义日志文件路径
+log_file_path = './data/log.log'  # 定义日志文件路径
 click_limit_file = "./data/click_limit.csv"  # 点击次数限制数据文件路径 (CSV 文件)
-
 
 def get_base_path():
     """
@@ -38,18 +37,24 @@ def get_base_path():
     else:
         base_path = os.path.abspath(".")  # 否则，返回当前工作目录的绝对路径
 
-    logging.info(f"Determined base path: {base_path}")  # <--- ADDED LOGGING
     data_path = os.path.join(base_path, 'data')
-    logging.info(f"Data directory path will be: {data_path}")  # <--- ADDED LOGGING
     if not os.path.exists(data_path):
         os.makedirs(data_path, exist_ok=True)
-        logging.info(f"Creating data directory: {data_path}")
-    else:
-        logging.info(f"Data directory already exists: {data_path}")  # <--- ADDED LOGGING
     return base_path
 
 
 base_path = get_base_path()
+
+
+# ----- 日志配置 -----
+# 配置日志记录，将日志信息写入 'log.log' 文件
+log_file_path = os.path.join(base_path, 'data', 'log.log')  # 日志文件存储在 data 目录
+print(log_file_path)
+logging.basicConfig(filename=log_file_path, level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    encoding='utf-8')
+
+logging.info("应用启动")  # 记录应用启动事件
 logging.info(f"当前执行文件所在目录: {base_path}")  # 记录基础路径信息
 
 
@@ -64,13 +69,8 @@ def ensure_data_directory():
     else:
         logging.info(f"Data directory already exists: {data_path}")
 
-# ----- 日志配置 -----
-# 配置日志记录，将日志信息写入 'log.log' 文件
-logging.basicConfig(filename=log_file_path, level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s',
-                    encoding='utf-8')
 
-logging.info("应用启动")  # 记录应用启动事件
+ensure_data_directory()
 
 
 def file_path_processor(file_path):
@@ -99,13 +99,10 @@ def file_path_processor(file_path):
 json_file = file_path_processor(json_file)
 thoughts_file = file_path_processor(thoughts_file)
 ico_logo_file = file_path_processor(ico_logo_file)
-click_limit_file = file_path_processor(click_limit_file)
-log_file_path = file_path_processor(log_file_path)
 
 logging.info(f"JSON 文件路径: {json_file}")  # 记录处理后的 JSON 文件路径
 logging.info(f"想法文件路径: {thoughts_file}")  # 记录处理后的想法文件路径
 logging.info(f"图标文件路径: {ico_logo_file}")  # 记录处理后的图标文件路径
-
 logging.info(f"点击次数限制数据文件路径: {click_limit_file}")  # 记录的点击次数限制数据文件路径
 logging.info(f"日志文件路径: {log_file_path}")  # 记录的日志文件路径
 
