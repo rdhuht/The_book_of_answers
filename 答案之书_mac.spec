@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['main.py'],
+    ['main_mac.py'],
     pathex=[],
     binaries=[],
     datas=[('./src', './src')],

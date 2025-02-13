@@ -67,7 +67,4 @@ MIT License - 允许自由使用、修改和分发。详情请参阅 `LICENSE` �
 
 欢迎提交 Issue 或 Pull Request 以改进本项目！
 
-## todo
-Csv文件data/csv检查是否存在，开机时，不存在创建空csv文件 Mac上ico图标没显示出来
-
 
