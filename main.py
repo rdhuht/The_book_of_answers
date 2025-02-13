@@ -225,7 +225,7 @@ def start_show_answer():
             gradually_show_answer(full_answer_text)  # 逐渐显示答案
         else:
             start_button.config(state=tk.NORMAL)  # 重新启用开始按钮
-            answer_label.config(text="未能获取答案，请重试。", foreground='#e74c3c')
+            answer_label.config(text="未能获取答案，请重试。")
             logging.error("未能从答案列表中获取有效答案。")
     else:
         logging.warning("已达到每日点击次数限制。")  # 记录达到限制警告
@@ -389,9 +389,8 @@ def show_thoughts():
         # 如果成功读取到想法内容
         thoughts_window = tk.Toplevel(root)  # 创建一个新的顶级窗口，父窗口为主窗口 root
         thoughts_window.title("Thoughts")  # 设置新窗口标题为 "Thoughts"
-        thoughts_window.configure(bg='#082032')  # 设置新窗口背景色与主窗口一致
 
-        thoughts_text = tk.Text(thoughts_window, wrap=tk.WORD, bg='#082032', fg='#f0f0f0')  # 创建文本框组件，设置背景色和前景色
+        thoughts_text = tk.Text(thoughts_window, wrap=tk.WORD)  # 创建文本框组件，设置背景色和前景色
         thoughts_text.insert(tk.END, thoughts_content)  # 将想法内容插入到文本框中
         thoughts_text.config(state=tk.DISABLED)  # 设置文本框为只读状态
         thoughts_text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)  # 文本框填充窗口，并设置内外边距
@@ -412,32 +411,30 @@ root = tk.Tk()
 root.title("The Book of Answers")  # 设置窗口标题
 root.iconbitmap(ico_logo_file)  # 设置窗口图标
 root.resizable(False, False)  # 禁止窗口大小调整
-root.configure(bg='#082032')  # 设置窗口背景色为深蓝色
 
 # ----- 菜单栏 -----
-menubar = tk.Menu(root, background='#2e0249', foreground='#f0f0f0')  # 创建菜单栏，设置背景色和前景色
-helpmenu = tk.Menu(menubar, tearoff=0, background='#2e0249', foreground='#f0f0f0')  # 创建 "Help" 菜单，不显示虚线，设置背景色和前景色
-helpmenu.add_command(label="Log", command=view_log_file, foreground='#f0f0f0', background='#2e0249')  # 添加 "Log" 子菜单项，关联查看日志文件函数
-menubar.add_cascade(label="Help", menu=helpmenu, foreground='#f0f0f0')  # 将 "Help" 菜单添加到菜单栏
+menubar = tk.Menu(root)  # 创建菜单栏，设置背景色和前景色
+helpmenu = tk.Menu(menubar, tearoff=0)  # 创建 "Help" 菜单，不显示虚线，设置背景色和前景色
+helpmenu.add_command(label="Log", command=view_log_file)  # 添加 "Log" 子菜单项，关联查看日志文件函数
+menubar.add_cascade(label="Help", menu=helpmenu)  # 将 "Help" 菜单添加到菜单栏
 
 # ----- "关于" 菜单 -----
-aboutmenu = tk.Menu(menubar, tearoff=0, background='#2e0249', foreground='#f0f0f0')  # 创建 "关于" 菜单
-aboutmenu.add_command(label="Thoughts", command=show_thoughts, foreground='#f0f0f0', background='#2e0249')  # 添加 "Thoughts" 子菜单项，关联显示想法函数
-menubar.add_cascade(label="About", menu=aboutmenu, foreground='#f0f0f0')  # 将 "关于" 菜单添加到菜单栏
+aboutmenu = tk.Menu(menubar, tearoff=0)  # 创建 "关于" 菜单
+aboutmenu.add_command(label="Thoughts", command=show_thoughts)  # 添加 "Thoughts" 子菜单项，关联显示想法函数
+menubar.add_cascade(label="About", menu=aboutmenu)  # 将 "关于" 菜单添加到菜单栏
 
-root.config(menu=menubar, background='#082032')  # 将菜单栏配置到主窗口，并确保菜单栏背景与主窗口一致
+root.config(menu=menubar)  # 将菜单栏配置到主窗口，并确保菜单栏背景与主窗口一致
 
 
 # ----- 样式配置 -----
 style = ttk.Style(root)  # 创建样式对象
-style.configure("TLabel", background='#082032', foreground='#f0f0f0', font=('Microsoft YaHei UI', 10))  # 配置 Label 样式：背景色、前景色、字体
+style.configure("TLabel", font=('Microsoft YaHei UI', 10))  # 配置 Label 样式：背景色、前景色、字体
 style.configure("TButton", font=('Microsoft YaHei UI', 10, 'bold'), padding=8, relief="raised",
-                background='#f0f0f0', foreground='#2e0249',  # 配置 Button 样式：字体、内边距、立体效果、背景色、前景色
                 borderwidth=2,  # 设置边框宽度
                 )
 
 # ----- 标题标签 -----
-title_label = ttk.Label(root, text="答案之书", font=('Microsoft YaHei UI', 18, 'bold'), foreground='#f0f0f0')  # 创建标题 Label，设置文本、字体和前景色
+title_label = ttk.Label(root, text="答案之书", font=('Microsoft YaHei UI', 18, 'bold'))  # 创建标题 Label，设置文本、字体和前景色
 title_label.pack(pady=(15, 5), padx=20)  # 使用 pack 布局管理器，设置垂直和水平方向的外边距
 
 # ----- 说明标签 (初始文本为空) -----
@@ -447,7 +444,6 @@ instructions_label = ttk.Label(
     font=('Microsoft YaHei UI', 10),  # 恢复原始字体大小
     wraplength=400,  # 设置文本自动换行长度
     justify="center",  # 文本居中对齐
-    foreground='#f0f0f0'  # 设置前景色
 )
 instructions_label.pack(pady=(0, 10), padx=20)  # 设置垂直和水平方向的外边距
 
@@ -462,7 +458,6 @@ answer_label = ttk.Label(
     font=('Microsoft YaHei UI', 14, 'bold'),  # 设置字体
     justify="center",  # 文本居中对齐
     wraplength=400,  # 设置文本自动换行长度
-    foreground='#f0f0f0'  # 设置前景色
 )
 answer_label.pack(pady=(10, 20), padx=20)  # 设置垂直和水平方向的外边距
 
